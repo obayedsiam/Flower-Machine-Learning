@@ -1,6 +1,7 @@
 import time
 import openpyxl
 from googletrans import Translator
+# from pygoogletranslation import Translator
 
 
 def translateThisText():
@@ -31,25 +32,28 @@ def translateThisText():
         review = cell_obj.value
         print(review)
         translatedText = ""
-
+        reviewLanguage = ""
         lengthOfReview = len(review)
         if lengthOfReview > 3900:
             translatedText = "Exceed_Length"
         else:
             if review is None:
                 translatedText = "None"
-
             else:
                 if language == "Bangla":
                     translatedText = "N/A"
+                    reviewLanguage = "Bangla"
                 else:
                     translator = Translator()
+                    reviewLanguage = translator.detect(review).lang
                     translatedText = translator.translate(review, dest='bn').text
+        print(reviewLanguage)
         print(translatedText)
         sheetnameLang.cell(row=i, column=1).value = review_Id
         sheetnameLang.cell(row=i, column=2).value = language
         sheetnameLang.cell(row=i, column=3).value = review
         sheetnameLang.cell(row=i, column=4).value = translatedText
+        sheetnameLang.cell(row=i, column=5).value = reviewLanguage
 
         # print("Updating row_value")
         file = open("../HelloWorldPython/translationId.txt", "w")
@@ -57,6 +61,6 @@ def translateThisText():
         file.close()
         # print("Saving Language File.....")
         linkUrlFileLang.save(r'../HelloWorldPython/translation.xlsx')
-        if i % 200 == 2:
-            print("Waiting... you can   stop")
-            time.sleep(5)
+        # if i % 200 == 2:
+        #     print("Waiting... you can   stop")
+        #     time.sleep(5)
