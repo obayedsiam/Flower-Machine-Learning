@@ -58,10 +58,14 @@
 # print(accuracy_score(Y_validation, predictions))
 # print(confusion_matrix(Y_validation, predictions))
 # print(classification_report(Y_validation, predictions))
+import GetData
 import Translate
 from googletrans import Translator
 
-Translate.translateThisText()
+proxies = ["45.152.188.246:3128", "154.13.5.41:59394", "51.250.80.131:80"]
+
+# proxies = GetData.get_free_proxies()
+GetData.get_data(proxies, 0)
 # translator = Translator()
 # translatedText = translator.translate("I am siam", dest='bn').text
 # print(translatedText)
